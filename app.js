@@ -5,6 +5,9 @@ const models = require("./models");
 
 const index = require("./views/index");
 const wikiRouter = require("./routes/wiki");
+app.use(express.urlencoded({ extended: false }));
+
+app.use(express.json());
 
 app.use("/wiki", wikiRouter);
 
@@ -12,9 +15,9 @@ db.authenticate().then(() => {
   console.log("connected to the database");
 });
 
-// app.get("/", (req, res, next) => {
-//   res.send("anything");
-// });
+app.get("/", (req, res, next) => {
+  res.redirect("/wiki");
+});
 
 const init = async () => {
   await models.db.sync({ force: true });
